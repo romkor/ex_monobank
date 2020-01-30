@@ -3,33 +3,36 @@
 Unofficial Elixir wrapper for Monobank API
 
 ## Functions
-
-### ExMonobank.bank_currency()
-Example response:
+### Personal API
+#### bank_currency()
+Example result:
 
 ```elixir
 {:ok,
  [
-   %{
-     "currencyCodeA" => 840,
-     "currencyCodeB" => 980,
-     "date" => ~U[2020-01-30 11:40:09Z],
-     "rateBuy" => 24.761,
-     "rateSell" => 25.0514
+   %ExMonobank.CurrencyInfo{
+     currency_code_a: 840,
+     currency_code_b: 980,
+     date: ~U[2020-01-30 11:40:09Z],
+     rate_buy: 24.761,
+     rate_cross: nil,
+     rate_sell: 25.0514
    },
-   %{
-     "currencyCodeA" => 978,
-     "currencyCodeB" => 980,
-     "date" => ~U[2020-01-30 13:00:05Z],
-     "rateBuy" => 27.161,
-     "rateSell" => 27.6098
+   %ExMonobank.CurrencyInfo{
+     currency_code_a: 978,
+     currency_code_b: 980,
+     date: ~U[2020-01-30 13:00:05Z],
+     rate_buy: 27.161,
+     rate_cross: nil,
+     rate_sell: 27.6098
    },
-   %{
-     "currencyCodeA" => 643,
-     "currencyCodeB" => 980,
-     "date" => ~U[2020-01-30 11:40:09Z],
-     "rateBuy" => 0.363,
-     "rateSell" => 0.398
+   %ExMonobank.CurrencyInfo{
+     currency_code_a: 643,
+     currency_code_b: 980,
+     date: ~U[2020-01-30 11:40:09Z],
+     rate_buy: 0.363,
+     rate_cross: nil,
+     rate_sell: 0.398
    },
    # ...
  ]
