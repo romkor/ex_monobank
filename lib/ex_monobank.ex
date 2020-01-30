@@ -12,6 +12,17 @@ defmodule ExMonobank do
   Get bank currency exchange rates.
   """
   def bank_currency do
-    get("/bank/currency")
+    case get("/bank/currency") do
+      {:ok, response} ->
+        body =
+          Enum.map(response.body, fn x ->
+            Map.update!(x, "date", &DateTime.from_unix!(&1))
+          end)
+
+        {:ok, body}
+
+      {:error, reason} ->
+        {:error, reason}
+    end
   end
 end
