@@ -4,8 +4,8 @@ defmodule ExMonobank.MixProject do
   def project do
     [
       app: :ex_monobank,
-      version: "0.1.0",
-      elixir: "~> 1.9",
+      version: "0.2.0",
+      elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       package: package(),
       deps: deps()
@@ -21,7 +21,7 @@ defmodule ExMonobank.MixProject do
   defp package do
     [
       description: "Monobank API (unofficial)",
-      files: ["lib", "mix.exs", "README*"],
+      files: ["lib", "lib/ex_monobank", "config/config.exs", "mix.exs", "README*"],
       maintainers: ["Roman Rodych"],
       licenses: ["MIT"],
       links: %{github: "https://github.com/romkor/ex_monobank"}

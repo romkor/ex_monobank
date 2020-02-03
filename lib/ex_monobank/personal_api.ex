@@ -3,9 +3,20 @@ defmodule ExMonobank.PersonalAPI do
   Documentation for ExMonobank.PersonalAPI
   """
 
-  use Tesla
+  use Tesla, only: ~w(get post)a, docs: false
 
-  plug(Tesla.Middleware.BaseUrl, "https://api.monobank.ua")
+  plug(
+    Tesla.Middleware.BaseUrl,
+    Application.get_env(
+      :ex_monobank,
+      :private_api
+    )[:base_url] || "https://api.monobank.ua"
+  )
+
+  plug(Tesla.Middleware.Headers, [
+    {"X-Token", Application.get_env(:ex_monobank, :private_api)[:token]}
+  ])
+
   plug(Tesla.Middleware.JSON)
 
   @doc """
@@ -15,6 +26,18 @@ defmodule ExMonobank.PersonalAPI do
     case get("/bank/currency") do
       {:ok, response} ->
         body = Enum.map(response.body, &map_to_currency_info/1)
+
+        {:ok, body}
+
+      {:error, reason} ->
+        {:error, reason}
+    end
+  end
+
+  def client_info do
+    case get("/personal/client-info") do
+      {:ok, response} ->
+        body = response.body
 
         {:ok, body}
 
