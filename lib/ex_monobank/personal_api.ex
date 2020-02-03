@@ -34,6 +34,9 @@ defmodule ExMonobank.PersonalAPI do
     end
   end
 
+  @doc """
+  Get client's accounts info.
+  """
   def client_info do
     case get("/personal/client-info") do
       {:ok, response} ->
