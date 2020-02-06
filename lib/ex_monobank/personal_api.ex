@@ -20,21 +20,6 @@ defmodule ExMonobank.PersonalAPI do
   plug(Tesla.Middleware.JSON)
 
   @doc """
-  Get bank currency exchange rates.
-  """
-  def bank_currency do
-    case get("/bank/currency") do
-      {:ok, response} ->
-        body = Enum.map(response.body, &map_to_currency_info/1)
-
-        {:ok, body}
-
-      {:error, reason} ->
-        {:error, reason}
-    end
-  end
-
-  @doc """
   Get client's accounts info.
   """
   def client_info do
@@ -49,17 +34,53 @@ defmodule ExMonobank.PersonalAPI do
     end
   end
 
-  defp map_to_currency_info(currency_map) do
-    struct(
-      ExMonobank.CurrencyInfo,
-      %{
-        currency_code_a: currency_map["currencyCodeA"],
-        currency_code_b: currency_map["currencyCodeB"],
-        date: DateTime.from_unix!(currency_map["date"]),
-        rate_sell: currency_map["rateSell"],
-        rate_buy: currency_map["rateBuy"],
-        rate_cross: currency_map["rateCross"]
-      }
-    )
+  @doc """
+  Get client's default account statements for a period from given date to now
+  """
+  def statement(from) do
+    statement(0, from)
+  end
+
+  @doc """
+  Get client's account statements for a period from given date to now
+  """
+  def statement(account, from) do
+    case get("/personal/statement/#{account}/#{DateTime.to_unix(from)}") do
+      {:ok, response} ->
+        body = response.body
+
+        {:ok, body}
+
+      {:error, reason} ->
+        {:error, reason}
+    end
+  end
+
+  @doc """
+  Get client's account statements for a given period
+  """
+  def statement(account, from, to) do
+    case get("/personal/statement/#{account}/#{DateTime.to_unix(from)}/#{DateTime.to_unix(to)}") do
+      {:ok, response} ->
+        body = response.body
+
+        {:ok, body}
+
+      {:error, reason} ->
+        {:error, reason}
+    end
+  end
+
+  @doc """
+  Set webhook
+  """
+  def webhook(url) do
+    case post("/personal/webhook", %{:webHookUrl => url}) do
+      {:ok, _response} ->
+        {:ok}
+
+      {:error, reason} ->
+        {:error, reason}
+    end
   end
 end

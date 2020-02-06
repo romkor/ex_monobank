@@ -3,11 +3,13 @@
 Unofficial Elixir wrapper for Monobank API
 
 ## Functions
-### Personal API
+### PublicAPI
 #### bank_currency()
-Example result:
+Example:
 
 ```elixir
+ExMonobank.PublicAPI.bank_currency()
+
 {:ok,
  [
    %ExMonobank.CurrencyInfo{
@@ -39,15 +41,37 @@ Example result:
 }
 ```
 
+### PersonalAPI
+
+#### client_info()
+Example:
+
+```elixir
+ExMonobank.PersonalAPI.client_info()
+```
+
+#### statement(from)
+Example:
+
+```elixir
+{:ok, from_date, 0} = DateTime.from_iso8601("2020-01-06T23:50:07Z")
+ExMonobank.PersonalAPI.statement(from_date)
+```
+
+#### statement(account, from)
+
+#### statement(account, from, to)
+
+#### webhook(url)
+
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `ex_monobank` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `ex_monobank` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:ex_monobank, "~> 0.1.0"}
+    {:ex_monobank, "~> 1.0.0"}
   ]
 end
 ```
