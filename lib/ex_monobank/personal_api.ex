@@ -90,7 +90,7 @@ defmodule ExMonobank.PersonalAPI do
          "cashbackType" => cashback_type,
          "creditLimit" => credit_limit,
          "currencyCode" => currency_code,
-         "maskedPan" => masked_pan
+         "maskedPan" => [masked_pan | _]
        }) do
     struct(
       ExMonobank.AccountInfo,
