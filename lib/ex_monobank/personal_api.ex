@@ -108,21 +108,6 @@ defmodule ExMonobank.PersonalAPI do
   defp map_to_client_info(%{
          "clientId" => client_id,
          "name" => name,
-         "accounts" => accounts
-       }) do
-    struct(
-      ExMonobank.ClientInfo,
-      %{
-        id: client_id,
-        name: name,
-        accounts: Enum.map(accounts, &map_to_account_info/1)
-      }
-    )
-  end
-
-  defp map_to_client_info(%{
-         "clientId" => client_id,
-         "name" => name,
          "webHookUrl" => web_hook_url,
          "accounts" => accounts
        }) do
@@ -137,4 +122,18 @@ defmodule ExMonobank.PersonalAPI do
     )
   end
 
+  defp map_to_client_info(%{
+         "clientId" => client_id,
+         "name" => name,
+         "accounts" => accounts
+       }) do
+    struct(
+      ExMonobank.ClientInfo,
+      %{
+        id: client_id,
+        name: name,
+        accounts: Enum.map(accounts, &map_to_account_info/1)
+      }
+    )
+  end
 end
