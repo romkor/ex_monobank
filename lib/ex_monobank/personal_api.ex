@@ -25,7 +25,7 @@ defmodule ExMonobank.PersonalAPI do
   def client_info do
     case get("/personal/client-info") do
       {:ok, response} ->
-        body = response.body
+        body = map_to_client_info(response.body)
 
         {:ok, body}
 
@@ -82,5 +82,43 @@ defmodule ExMonobank.PersonalAPI do
       {:error, reason} ->
         {:error, reason}
     end
+  end
+
+  defp map_to_account_info(%{
+         "id" => id,
+         "balance" => balance,
+         "cashbackType" => cashback_type,
+         "creditLimit" => credit_limit,
+         "currencyCode" => currency_code,
+         "maskedPan" => masked_pan
+       }) do
+    struct(
+      ExMonobank.AccountInfo,
+      %{
+        id: id,
+        balance: balance,
+        cashback_type: cashback_type,
+        credit_limit: credit_limit,
+        currency_code: currency_code,
+        masked_pan: masked_pan
+      }
+    )
+  end
+
+  defp map_to_client_info(%{
+         "clientId" => client_id,
+         "name" => name,
+         "webHookUrl" => web_hook_url,
+         "accounts" => accounts
+       }) do
+    struct(
+      ExMonobank.ClientInfo,
+      %{
+        id: client_id,
+        name: name,
+        web_hook_url: web_hook_url,
+        accounts: Enum.map(accounts, &map_to_account_info/1)
+      }
+    )
   end
 end

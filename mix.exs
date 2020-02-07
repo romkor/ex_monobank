@@ -4,7 +4,7 @@ defmodule ExMonobank.MixProject do
   def project do
     [
       app: :ex_monobank,
-      version: "1.0.0",
+      version: "2.0.0",
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       package: package(),
