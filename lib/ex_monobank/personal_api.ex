@@ -19,7 +19,7 @@ defmodule ExMonobank.PersonalAPI do
 
   plug(Tesla.Middleware.JSON)
 
-  if Mix.env == :dev do
+  if Mix.env() == :dev do
     plug(Tesla.Middleware.Logger)
   end
 
@@ -50,9 +50,11 @@ defmodule ExMonobank.PersonalAPI do
   Get client's account statements for a period from given date to now
   """
   def statement(account, from) do
+    map_fn = if account == 0, do: &map_to_statement_info/1, else: &map_to_statement_info(&1, account)
+
     case get("/personal/statement/#{account}/#{DateTime.to_unix(from)}") do
       {:ok, %{status: status, body: body}} when status >= 200 and status < 400 ->
-        {:ok, Enum.map(body, &map_to_statement_info/1)}
+        {:ok, Enum.map(body, map_fn)}
 
       {:ok, %{body: %{"errorDescription" => reason}}} ->
         {:error, reason}
@@ -68,7 +70,7 @@ defmodule ExMonobank.PersonalAPI do
   def statement(account, from, to) do
     case get("/personal/statement/#{account}/#{DateTime.to_unix(from)}/#{DateTime.to_unix(to)}") do
       {:ok, %{status: status, body: body}} when status >= 200 and status < 400 ->
-        {:ok, Enum.map(body, &map_to_statement_info/1)}
+        {:ok, Enum.map(body, &map_to_statement_info(&1, account))}
 
       {:ok, %{body: %{"errorDescription" => reason}}} ->
         {:error, reason}
@@ -158,7 +160,7 @@ defmodule ExMonobank.PersonalAPI do
          "hold" => hold,
          "mcc" => mcc,
          "operationAmount" => operation_amount,
-         "time" => time,
+         "time" => time
        }) do
     struct(
       ExMonobank.StatementInfo,
@@ -173,7 +175,39 @@ defmodule ExMonobank.PersonalAPI do
         hold: hold,
         mcc: mcc,
         operation_amount: operation_amount,
-        time: DateTime.from_unix!(time),
+        time: DateTime.from_unix!(time)
+      }
+    )
+  end
+
+  defp map_to_statement_info(%{
+         "id" => id,
+         "amount" => amount,
+         "balance" => balance,
+         "cashbackAmount" => cashback_amount,
+         "commissionRate" => commission_rate,
+         "currencyCode" => currency_code,
+         "description" => description,
+         "hold" => hold,
+         "mcc" => mcc,
+         "operationAmount" => operation_amount,
+         "time" => time
+       }, account_id) do
+    struct(
+      ExMonobank.StatementInfo,
+      %{
+        id: id,
+        account_id: account_id,
+        amount: amount,
+        balance: balance,
+        cashback_amount: cashback_amount,
+        commission_rate: commission_rate,
+        currency_code: currency_code,
+        description: description,
+        hold: hold,
+        mcc: mcc,
+        operation_amount: operation_amount,
+        time: DateTime.from_unix!(time)
       }
     )
   end
