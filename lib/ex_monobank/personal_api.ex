@@ -19,15 +19,20 @@ defmodule ExMonobank.PersonalAPI do
 
   plug(Tesla.Middleware.JSON)
 
+  if Mix.env == :dev do
+    plug(Tesla.Middleware.Logger)
+  end
+
   @doc """
   Get client's accounts info.
   """
   def client_info do
     case get("/personal/client-info") do
-      {:ok, response} ->
-        body = map_to_client_info(response.body)
+      {:ok, %{status: status, body: body}} when status >= 200 and status < 400 ->
+        {:ok, map_to_client_info(body)}
 
-        {:ok, body}
+      {:ok, %{body: %{"errorDescription" => reason}}} ->
+        {:error, reason}
 
       {:error, reason} ->
         {:error, reason}
@@ -46,10 +51,11 @@ defmodule ExMonobank.PersonalAPI do
   """
   def statement(account, from) do
     case get("/personal/statement/#{account}/#{DateTime.to_unix(from)}") do
-      {:ok, response} ->
-        body = response.body
+      {:ok, %{status: status, body: body}} when status >= 200 and status < 400 ->
+        {:ok, Enum.map(body, &map_to_statement_info/1)}
 
-        {:ok, body}
+      {:ok, %{body: %{"errorDescription" => reason}}} ->
+        {:error, reason}
 
       {:error, reason} ->
         {:error, reason}
@@ -61,10 +67,11 @@ defmodule ExMonobank.PersonalAPI do
   """
   def statement(account, from, to) do
     case get("/personal/statement/#{account}/#{DateTime.to_unix(from)}/#{DateTime.to_unix(to)}") do
-      {:ok, response} ->
-        body = response.body
+      {:ok, %{status: status, body: body}} when status >= 200 and status < 400 ->
+        {:ok, Enum.map(body, &map_to_statement_info/1)}
 
-        {:ok, body}
+      {:ok, %{body: %{"errorDescription" => reason}}} ->
+        {:error, reason}
 
       {:error, reason} ->
         {:error, reason}
@@ -76,8 +83,11 @@ defmodule ExMonobank.PersonalAPI do
   """
   def webhook(url) do
     case post("/personal/webhook", %{:webHookUrl => url}) do
-      {:ok, _response} ->
+      {:ok, %{status: status}} when status >= 200 and status < 400 ->
         {:ok}
+
+      {:ok, %{body: %{"errorDescription" => reason}}} ->
+        {:error, reason}
 
       {:error, reason} ->
         {:error, reason}
@@ -133,6 +143,37 @@ defmodule ExMonobank.PersonalAPI do
         id: client_id,
         name: name,
         accounts: Enum.map(accounts, &map_to_account_info/1)
+      }
+    )
+  end
+
+  defp map_to_statement_info(%{
+         "id" => id,
+         "amount" => amount,
+         "balance" => balance,
+         "cashbackAmount" => cashback_amount,
+         "commissionRate" => commission_rate,
+         "currencyCode" => currency_code,
+         "description" => description,
+         "hold" => hold,
+         "mcc" => mcc,
+         "operationAmount" => operation_amount,
+         "time" => time,
+       }) do
+    struct(
+      ExMonobank.StatementInfo,
+      %{
+        id: id,
+        amount: amount,
+        balance: balance,
+        cashback_amount: cashback_amount,
+        commission_rate: commission_rate,
+        currency_code: currency_code,
+        description: description,
+        hold: hold,
+        mcc: mcc,
+        operation_amount: operation_amount,
+        time: DateTime.from_unix!(time),
       }
     )
   end

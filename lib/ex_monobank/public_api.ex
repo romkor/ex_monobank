@@ -15,15 +15,20 @@ defmodule ExMonobank.PublicAPI do
 
   plug(Tesla.Middleware.JSON)
 
+  if Mix.env == :dev do
+    plug(Tesla.Middleware.Logger)
+  end
+
   @doc """
   Get bank currency exchange rates.
   """
   def bank_currency do
     case get("/bank/currency") do
-      {:ok, response} ->
-        body = Enum.map(response.body, &map_to_currency_info/1)
+      {:ok, %{status: status, body: body}} when status >= 200 and status < 400 ->
+        {:ok, Enum.map(body, &map_to_currency_info/1)}
 
-        {:ok, body}
+      {:ok, %{body: %{"errorDescription" => reason}}} ->
+        {:error, reason}
 
       {:error, reason} ->
         {:error, reason}
