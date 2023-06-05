@@ -1,0 +1,30 @@
+[
+  {
+    "request": {
+      "body": "{\"amount\":null,\"ccy\":null,\"merchant_paym_info\":null,\"payment_type\":null,\"qr_id\":null,\"redirect_url\":null,\"save_card\":null,\"validity\":null,\"webhook_url\":null}",
+      "headers": {
+        "X-Token": "***",
+        "content-type": "application/json"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://api.monobank.ua/api/merchant/invoice/create"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"errCode\":\"1001\",\"errText\":\"invalid 'amount'\"}",
+      "headers": {
+        "Date": "Mon, 05 Jun 2023 16:44:37 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "47",
+        "Connection": "keep-alive",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains; preload",
+        "Trace-Id": "92d8434a8f38222e69d1eb73a33d1025"
+      },
+      "status_code": 400,
+      "type": "ok"
+    }
+  }
+]

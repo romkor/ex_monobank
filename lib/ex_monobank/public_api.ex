@@ -9,13 +9,14 @@ defmodule ExMonobank.PublicAPI do
     Tesla.Middleware.BaseUrl,
     Application.get_env(
       :ex_monobank,
-      :base_url
-    ) || "https://api.monobank.ua"
+      :base_url,
+      ExMonobank.default_url()
+    )
   )
 
   plug(Tesla.Middleware.JSON)
 
-  if Mix.env == :dev do
+  if Mix.env() == :dev do
     plug(Tesla.Middleware.Logger)
   end
 
