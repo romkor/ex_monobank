@@ -99,4 +99,19 @@ defmodule ExMonobank.MerchantAPI do
       modified_at: modified_at
     })
   end
+
+  defp map_to_invoice_info(%{
+         "status" => status,
+         "createdDate" => created_date,
+         "modifiedDate" => modified_date
+       }) do
+    {:ok, created_at, 0} = DateTime.from_iso8601(created_date)
+    {:ok, modified_at, 0} = DateTime.from_iso8601(modified_date)
+
+    struct(ExMonobank.InvoiceInfo, %{
+      status: status,
+      created_at: created_at,
+      modified_at: modified_at
+    })
+  end
 end
