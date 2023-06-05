@@ -97,4 +97,26 @@ defmodule ExMonobank.MerchantAPITest do
       end
     end
   end
+
+  describe "cancel_invoice/1" do
+    # TODO: How to cancel test order?
+    # test "success with valid invoiceId" do
+    #   use_cassette "MerchantAPI/cancel_invoice_success_with_valid_id" do
+    #     {:ok, %ExMonobank.InvoiceInfo{} = invoice} =
+    #       MerchantAPI.cancel_invoice("230605DpurVjPDSmfzEP")
+
+    #     assert invoice.status == "processing"
+    #     assert invoice.created_at == ~U[2023-06-05 16:38:48Z]
+    #     assert invoice.modified_at == ~U[2023-06-05 16:38:48Z]
+    #   end
+    # end
+
+    @tag :focus
+    test "failure with invalid invoiceId" do
+      use_cassette "MerchantAPI/cancel_invoice_failure_with_inbvalid_id" do
+        {:error, error} = MerchantAPI.cancel_invoice("invalid")
+        assert error == "invoice not found"
+      end
+    end
+  end
 end

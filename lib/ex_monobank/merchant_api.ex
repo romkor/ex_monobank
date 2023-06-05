@@ -58,6 +58,23 @@ defmodule ExMonobank.MerchantAPI do
     end
   end
 
+  @doc """
+  Cancel invoice
+  https://api.monobank.ua/docs/acquiring.html#/paths/~1api~1merchant~1invoice~1cancel/post
+  """
+  def cancel_invoice(id, extra \\ %{}) do
+    case post("/api/merchant/invoice/cancel", Map.merge(%{invoiceId: id}, extra)) do
+      {:ok, %{status: status, body: body}} when status >= 200 and status < 400 ->
+        {:ok, map_to_invoice_info(body)}
+
+      {:ok, %{body: %{"errText" => reason}}} ->
+        {:error, reason}
+
+      {:error, reason} ->
+        {:error, reason}
+    end
+  end
+
   defp map_to_invoice_info(%{"invoiceId" => id, "pageUrl" => url}) do
     struct(ExMonobank.InvoiceInfo, %{id: id, page_url: url})
   end
