@@ -75,6 +75,23 @@ defmodule ExMonobank.MerchantAPI do
     end
   end
 
+  @doc """
+  Remove invoice
+  https://api.monobank.ua/docs/acquiring.html#/paths/~1api~1merchant~1invoice~1remove/post
+  """
+  def remove_invoice(id) do
+    case post("/api/merchant/invoice/remove", %{invoiceId: id}) do
+      {:ok, %{status: status, body: body}} when status >= 200 and status < 400 ->
+        {:ok, map_to_invoice_info(body)}
+
+      {:ok, %{body: %{"errText" => reason}}} ->
+        {:error, reason}
+
+      {:error, reason} ->
+        {:error, reason}
+    end
+  end
+
   defp map_to_invoice_info(%{"invoiceId" => id, "pageUrl" => url}) do
     struct(ExMonobank.InvoiceInfo, %{id: id, page_url: url})
   end
@@ -113,5 +130,9 @@ defmodule ExMonobank.MerchantAPI do
       created_at: created_at,
       modified_at: modified_at
     })
+  end
+
+  defp map_to_invoice_info(%{"status" => status}) do
+    struct(ExMonobank.InvoiceInfo, %{status: status})
   end
 end

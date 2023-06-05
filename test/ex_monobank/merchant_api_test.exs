@@ -12,8 +12,8 @@ defmodule ExMonobank.MerchantAPITest do
           |> ExMonobank.Invoice.new()
           |> MerchantAPI.create_invoice()
 
-        assert invoice.id == "230605DpurVjPDSmfzEP"
-        assert invoice.page_url == "https://pay.mbnk.biz/230605DpurVjPDSmfzEP"
+        assert invoice.id == "230605A3RNUJNt1oqoiY"
+        assert invoice.page_url == "https://pay.mbnk.biz/230605A3RNUJNt1oqoiY"
       end
     end
 
@@ -99,8 +99,6 @@ defmodule ExMonobank.MerchantAPITest do
   end
 
   describe "cancel_invoice/1" do
-    # TODO: How to cancel test order?
-    @tag :focus
     test "success with valid invoiceId" do
       use_cassette "MerchantAPI/cancel_invoice_success_with_valid_id" do
         {:ok, %ExMonobank.InvoiceInfo{} = invoice} =
@@ -112,10 +110,34 @@ defmodule ExMonobank.MerchantAPITest do
       end
     end
 
-    @tag :focus
     test "failure with invalid invoiceId" do
       use_cassette "MerchantAPI/cancel_invoice_failure_with_inbvalid_id" do
         {:error, error} = MerchantAPI.cancel_invoice("invalid")
+        assert error == "invoice not found"
+      end
+    end
+  end
+
+  describe "remove_invoice/1" do
+    test "success with valid invoiceId" do
+      use_cassette "MerchantAPI/remove_invoice_success_with_valid_invoice_id" do
+        {:ok, invoice} = MerchantAPI.remove_invoice("230605A3RNUJNt1oqoiY")
+
+        assert invoice.status == "success"
+      end
+    end
+
+    test "failure with valid invoiceId" do
+      use_cassette "MerchantAPI/remove_invoice_failure_with_paid_invoice_id" do
+        {:error, error} = MerchantAPI.remove_invoice("230605DpurVjPDSmfzEP")
+
+        assert error == "invoice not active"
+      end
+    end
+
+    test "failure with invalid invoiceId" do
+      use_cassette "MerchantAPI/remove_invoice_failure_with_invalid_id" do
+        {:error, error} = MerchantAPI.remove_invoice("invalid")
         assert error == "invoice not found"
       end
     end

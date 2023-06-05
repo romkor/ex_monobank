@@ -1,0 +1,30 @@
+[
+  {
+    "request": {
+      "body": "{\"invoiceId\":\"invalid\"}",
+      "headers": {
+        "X-Token": "***",
+        "content-type": "application/json"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://api.monobank.ua/api/merchant/invoice/remove"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"errCode\":\"1004\",\"errText\":\"invoice not found\"}",
+      "headers": {
+        "Date": "Mon, 05 Jun 2023 18:14:21 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "48",
+        "Connection": "keep-alive",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains; preload",
+        "Trace-Id": "3f59e316eb13eefedd7087e04868e00e"
+      },
+      "status_code": 404,
+      "type": "ok"
+    }
+  }
+]
