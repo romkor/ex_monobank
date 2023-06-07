@@ -91,7 +91,7 @@ defmodule ExMonobank.MerchantAPITest do
     end
 
     test "failure with invalid invoiceId" do
-      use_cassette "MerchantAPI/get_invoice_status_failure_with_inbvalid_id" do
+      use_cassette "MerchantAPI/get_invoice_status_failure_with_invalid_id" do
         {:error, error} = MerchantAPI.get_invoice_status("invalid")
         assert error == "invoice not found"
       end
@@ -111,7 +111,7 @@ defmodule ExMonobank.MerchantAPITest do
     end
 
     test "failure with invalid invoiceId" do
-      use_cassette "MerchantAPI/cancel_invoice_failure_with_inbvalid_id" do
+      use_cassette "MerchantAPI/cancel_invoice_failure_with_invalid_id" do
         {:error, error} = MerchantAPI.cancel_invoice("invalid")
         assert error == "invoice not found"
       end

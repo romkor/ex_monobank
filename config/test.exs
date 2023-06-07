@@ -1,7 +1,5 @@
 import Config
 
-config :tesla, adapter: Tesla.Adapter.Hackney
-
 config :exvcr,
   vcr_cassette_library_dir: "fixture/vcr_cassettes",
   filter_sensitive_data: [
