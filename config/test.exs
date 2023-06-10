@@ -11,6 +11,6 @@ config :exvcr,
 
 config :ex_monobank,
   base_url: "https://api.monobank.ua",
-  private_api: %{
+  merchant_api: %{
     token: System.get_env("MONOBANK_API_TOKEN")
   }

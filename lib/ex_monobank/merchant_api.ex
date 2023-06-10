@@ -15,7 +15,7 @@ defmodule ExMonobank.MerchantAPI do
   )
 
   plug(Tesla.Middleware.Headers, [
-    {"X-Token", Application.get_env(:ex_monobank, :private_api)[:token]}
+    {"X-Token", Application.get_env(:ex_monobank, :merchant_api)[:token]}
   ])
 
   plug(Tesla.Middleware.JSON)
