@@ -1,0 +1,29 @@
+[
+  {
+    "request": {
+      "body": "",
+      "headers": {
+        "X-Token": "***"
+      },
+      "method": "get",
+      "options": [],
+      "request_body": "",
+      "url": "https://api.monobank.ua/api/merchant/invoice/payment-info?invoiceId=230605DpurVjPDSmfzEP"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"maskedPan\":\"53754114******22\",\"approvalCode\":\"563594\",\"rrn\":\"073687715731\",\"createdDate\":\"2023-06-05T17:59:05Z\",\"terminal\":\"MI000000\",\"paymentScheme\":\"full\",\"paymentMethod\":\"pan\",\"fee\":1,\"domesticCard\":true,\"country\":\"804\",\"amount\":100,\"ccy\":980,\"finalAmount\":0,\"cancelList\":[{\"status\":\"success\",\"amount\":100,\"ccy\":980,\"createdDate\":\"2023-06-05T17:59:28Z\",\"modifiedDate\":\"2023-06-05T17:59:28Z\",\"approvalCode\":\"563594\",\"rrn\":\"073687715731\"}]}",
+      "headers": {
+        "Date": "Sat, 10 Jun 2023 16:05:50 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "443",
+        "Connection": "keep-alive",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains; preload",
+        "Trace-Id": "687d4279d364320310215bbf574613d0"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  }
+]

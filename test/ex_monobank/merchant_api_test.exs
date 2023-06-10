@@ -98,6 +98,37 @@ defmodule ExMonobank.MerchantAPITest do
     end
   end
 
+  describe "get_payment_info/1" do
+    test "success with valid invoiceId" do
+      use_cassette "MerchantAPI/get_payment_info_success_with_valid_id" do
+        {:ok, %ExMonobank.PaymentInfo{} = payment} =
+          MerchantAPI.get_payment_info("230605DpurVjPDSmfzEP")
+
+        assert payment.masked_pan == "53754114******22"
+        assert payment.approval_code == "563594"
+        assert payment.rrn == "073687715731"
+        assert payment.amount == 100
+        assert payment.ccy == 980
+        assert payment.final_amount == 0
+        assert payment.created_at == ~U[2023-06-05 17:59:05Z]
+        assert payment.terminal == "MI000000"
+        assert payment.payment_scheme == "full"
+        assert payment.payment_method == "pan"
+        assert payment.fee == 1
+        assert payment.domestic_card == true
+        assert payment.country == "804"
+      end
+    end
+
+    @tag :focus
+    test "failure with invalid invoiceId" do
+      use_cassette "MerchantAPI/get_payment_info_failure_with_invalid_id" do
+        {:error, error} = MerchantAPI.get_payment_info("invalid")
+        assert error == "invoice not found"
+      end
+    end
+  end
+
   describe "cancel_invoice/1" do
     test "success with valid invoiceId" do
       use_cassette "MerchantAPI/cancel_invoice_success_with_valid_id" do
