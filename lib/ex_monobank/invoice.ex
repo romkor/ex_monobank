@@ -6,7 +6,7 @@ defmodule ExMonobank.Invoice do
     :ccy,
     :merchantPaymInfo,
     :redirectUrl,
-    :webhookUrl,
+    :webHookUrl,
     :validity,
     :paymentType,
     :qrId,
