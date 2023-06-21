@@ -1,0 +1,29 @@
+[
+  {
+    "request": {
+      "body": "",
+      "headers": {
+        "X-Token": "***"
+      },
+      "method": "get",
+      "options": [],
+      "request_body": "",
+      "url": "https://api.monobank.ua/api/merchant/invoice/status?invoiceId=230605DpurVjPDSmfzEP"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"invoiceId\":\"230605DpurVjPDSmfzEP\",\"status\":\"created\",\"amount\":100,\"ccy\":980,\"createdDate\":\"2023-06-05T16:38:48Z\",\"modifiedDate\":\"2023-06-05T16:38:48Z\"}",
+      "headers": {
+        "Date": "Mon, 05 Jun 2023 17:15:54 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "153",
+        "Connection": "keep-alive",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains; preload",
+        "Trace-Id": "80c43a91813277182f0b8b807d98c0c5"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  }
+]

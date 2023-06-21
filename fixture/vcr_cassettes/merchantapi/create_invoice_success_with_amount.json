@@ -1,0 +1,30 @@
+[
+  {
+    "request": {
+      "body": "{\"amount\":100,\"ccy\":null,\"merchantPaymInfo\":null,\"paymentType\":null,\"qrId\":null,\"redirectUrl\":null,\"saveCardData\":null,\"validity\":null,\"webhookUrl\":null}",
+      "headers": {
+        "X-Token": "***",
+        "content-type": "application/json"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://api.monobank.ua/api/merchant/invoice/create"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"invoiceId\":\"230605A3RNUJNt1oqoiY\",\"pageUrl\":\"https://pay.mbnk.biz/230605A3RNUJNt1oqoiY\"}",
+      "headers": {
+        "Date": "Mon, 05 Jun 2023 18:12:48 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "90",
+        "Connection": "keep-alive",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains; preload",
+        "Trace-Id": "fedf58314b5641523bdc9ac34be10ee3"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  }
+]

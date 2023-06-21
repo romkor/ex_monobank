@@ -1,0 +1,30 @@
+[
+  {
+    "request": {
+      "body": "{\"amount\":\"amount\",\"ccy\":null,\"merchant_paym_info\":null,\"payment_type\":null,\"qr_id\":null,\"redirect_url\":null,\"save_card\":null,\"validity\":null,\"webhook_url\":null}",
+      "headers": {
+        "X-Token": "***",
+        "content-type": "application/json"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://api.monobank.ua/api/merchant/invoice/create"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"errCode\":\"BAD_REQUEST\",\"errText\":\"json unmarshal: : json: cannot unmarshal string into Go struct field InvoiceCreateRequest.amount of type int64\"}",
+      "headers": {
+        "Date": "Mon, 05 Jun 2023 16:49:28 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "148",
+        "Connection": "keep-alive",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains; preload",
+        "Trace-Id": "61895d4c6139a769df80f390860c0a5f"
+      },
+      "status_code": 400,
+      "type": "ok"
+    }
+  }
+]

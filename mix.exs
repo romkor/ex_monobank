@@ -8,7 +8,13 @@ defmodule ExMonobank.MixProject do
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       package: package(),
-      deps: deps()
+      deps: deps(),
+      preferred_cli_env: [
+        vcr: :test,
+        "vcr.delete": :test,
+        "vcr.check": :test,
+        "vcr.show": :test
+      ]
     ]
   end
 
@@ -31,8 +37,10 @@ defmodule ExMonobank.MixProject do
   defp deps do
     [
       {:tesla, "~> 1.4.0"},
+      {:hackney, "~> 1.18"},
       {:jason, ">= 1.0.0"},
-      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.29.4", only: :dev, runtime: false},
+      {:exvcr, "~> 0.11", only: :test}
     ]
   end
 end

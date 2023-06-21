@@ -1,0 +1,30 @@
+[
+  {
+    "request": {
+      "body": "{\"invoiceId\":\"230605DpurVjPDSmfzEP\"}",
+      "headers": {
+        "X-Token": "***",
+        "content-type": "application/json"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://api.monobank.ua/api/merchant/invoice/cancel"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"status\":\"success\",\"createdDate\":\"2023-06-05T17:59:28Z\",\"modifiedDate\":\"2023-06-05T17:59:28Z\"}",
+      "headers": {
+        "Date": "Mon, 05 Jun 2023 17:59:28 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "95",
+        "Connection": "keep-alive",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains; preload",
+        "Trace-Id": "39c7df33208ce1ba96f347eb788ab34e"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  }
+]

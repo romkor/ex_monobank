@@ -1,0 +1,30 @@
+[
+  {
+    "request": {
+      "body": "{\"amount\":100,\"ccy\":980,\"merchantPaymInfo\":{\"basketOrder\":[{\"name\":\"TestItem\",\"qty\":2,\"sum\":100}],\"destination\":\"destination_info\",\"reference\":\"reference_id\"},\"paymentType\":\"debit\",\"qrId\":null,\"redirectUrl\":\"https://localhost:4000/monopay/success\",\"saveCardData\":null,\"validity\":3600,\"webhookUrl\":\"https://localhost:4000/api/v1/monopay/webhook\"}",
+      "headers": {
+        "X-Token": "***",
+        "content-type": "application/json"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://api.monobank.ua/api/merchant/invoice/create"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"invoiceId\":\"2306058TJ5EYzZxFNuvv\",\"pageUrl\":\"https://pay.mbnk.biz/2306058TJ5EYzZxFNuvv\"}",
+      "headers": {
+        "Date": "Mon, 05 Jun 2023 16:57:58 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "90",
+        "Connection": "keep-alive",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains; preload",
+        "Trace-Id": "b74df652f9fc0fce4466babf6f745135"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  }
+]

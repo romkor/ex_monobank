@@ -1,0 +1,29 @@
+[
+  {
+    "request": {
+      "body": "",
+      "headers": {
+        "X-Token": "***"
+      },
+      "method": "get",
+      "options": [],
+      "request_body": "",
+      "url": "https://api.monobank.ua/api/merchant/invoice/payment-info?invoiceId=invalid"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"errCode\":\"1004\",\"errText\":\"invoice not found\"}",
+      "headers": {
+        "Date": "Sat, 10 Jun 2023 16:12:30 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "48",
+        "Connection": "keep-alive",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains; preload",
+        "Trace-Id": "a233d0efe47b76bc05b753322ed5a59b"
+      },
+      "status_code": 404,
+      "type": "ok"
+    }
+  }
+]

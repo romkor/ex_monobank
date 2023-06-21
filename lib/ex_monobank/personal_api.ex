@@ -9,8 +9,9 @@ defmodule ExMonobank.PersonalAPI do
     Tesla.Middleware.BaseUrl,
     Application.get_env(
       :ex_monobank,
-      :private_api
-    )[:base_url] || "https://api.monobank.ua"
+      :base_url,
+      ExMonobank.default_url()
+    )
   )
 
   plug(Tesla.Middleware.Headers, [
@@ -50,7 +51,8 @@ defmodule ExMonobank.PersonalAPI do
   Get client's account statements for a period from given date to now
   """
   def statement(account, from) do
-    map_fn = if account == 0, do: &map_to_statement_info/1, else: &map_to_statement_info(&1, account)
+    map_fn =
+      if account == 0, do: &map_to_statement_info/1, else: &map_to_statement_info(&1, account)
 
     case get("/personal/statement/#{account}/#{DateTime.to_unix(from)}") do
       {:ok, %{status: status, body: body}} when status >= 200 and status < 400 ->
@@ -180,19 +182,22 @@ defmodule ExMonobank.PersonalAPI do
     )
   end
 
-  defp map_to_statement_info(%{
-         "id" => id,
-         "amount" => amount,
-         "balance" => balance,
-         "cashbackAmount" => cashback_amount,
-         "commissionRate" => commission_rate,
-         "currencyCode" => currency_code,
-         "description" => description,
-         "hold" => hold,
-         "mcc" => mcc,
-         "operationAmount" => operation_amount,
-         "time" => time
-       }, account_id) do
+  defp map_to_statement_info(
+         %{
+           "id" => id,
+           "amount" => amount,
+           "balance" => balance,
+           "cashbackAmount" => cashback_amount,
+           "commissionRate" => commission_rate,
+           "currencyCode" => currency_code,
+           "description" => description,
+           "hold" => hold,
+           "mcc" => mcc,
+           "operationAmount" => operation_amount,
+           "time" => time
+         },
+         account_id
+       ) do
     struct(
       ExMonobank.StatementInfo,
       %{
